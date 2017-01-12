@@ -3,6 +3,7 @@ import requests
 
 from google.appengine.ext import testbed
 
+
 class MainTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -15,4 +16,4 @@ class MainTestCase(unittest.TestCase):
     def testHello(self):
         url = 'http://localhost:8080/'
         response = requests.get(url)
-        self.assertEqual("Hello World!", response.content)
+        self.assertEqual('{"Hello": "World"}\n', response.content)

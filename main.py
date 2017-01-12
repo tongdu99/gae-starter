@@ -1,14 +1,17 @@
 import logging
 
 from flask import Flask
-
+from flask_restful import Api
+from hello.HelloWorld import HelloWorld
+#
+# class hello(Resource):
+#     def get(self):
+#         return {'hello': 'world'}
 
 app = Flask(__name__)
+api = Api(app)
 
-
-@app.route('/')
-def hello():
-    return 'Hello World!'
+api.add_resource(HelloWorld, '/')
 
 
 @app.errorhandler(500)
