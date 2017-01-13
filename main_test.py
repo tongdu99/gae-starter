@@ -14,6 +14,6 @@ class MainTestCase(unittest.TestCase):
         self.testbed.deactivate()
 
     def testHello(self):
-        url = 'http://localhost:8080/'
+        url = 'http://localhost:8080/api/1.0/helloworld'
         response = requests.get(url)
         self.assertEqual('{"Hello": "World"}\n', response.content)

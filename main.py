@@ -7,7 +7,7 @@ from hello.HelloWorld import HelloWorld
 app = Flask(__name__)
 api = Api(app)
 
-api.add_resource(HelloWorld, '/')
+api.add_resource(HelloWorld, '/api/1.0/helloworld')
 
 
 @app.errorhandler(500)
