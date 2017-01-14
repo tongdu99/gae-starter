@@ -21,7 +21,7 @@ api = Api(app)
 api.add_resource(HelloWorld, '/api/1.0/helloworld')
 
 app_id = app_identity.get_application_id()
-host = "https://"+app_id
+host = "https://"+app_id+".appspot.com"
 
 @app.route('/')
 def home():
