@@ -1,4 +1,5 @@
 import logging
+import os
 
 from flask import Flask, render_template
 from flask_restful import Api
@@ -20,12 +21,16 @@ api = Api(app)
 
 api.add_resource(HelloWorld, '/api/1.0/helloworld')
 
-app_id = app_identity.get_application_id()
-host = "https://"+app_id+".appspot.com"
+url_prefix = "http://"
+if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+    url_prefix = "https://"
+
+host_name = app_identity.get_default_version_hostname()
+url_base = url_prefix+host_name
 
 @app.route('/')
 def home():
-    url = host + '/api/1.0/helloworld'
+    url = url_base + '/api/1.0/helloworld'
     response = requests.get(url)
     return render_template('home.html', message=response.json()['message'])
 
