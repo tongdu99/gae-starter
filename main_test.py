@@ -17,7 +17,8 @@ class MainTestCase(unittest.TestCase):
     def testHello(self):
         url = 'http://localhost:8080/api/1.0/helloworld'
         response = requests.get(url)
-        self.assertEqual('{"Hello": "World"}\n', response.content)
+
+        self.assertEqual("Hello World", response.json()['message'])
 
     def testHome(self):
         url = 'http://localhost:8080'
