@@ -5,10 +5,11 @@ from flask import Flask, render_template
 from flask_restful import Api
 from google.appengine.api import app_identity
 
-from hello.messages import HelloWorld, HelloMessage
+from hello.messages import HelloWorld, HelloMessage, db
 
 import requests
 from requests_toolbelt.adapters import appengine
+from flask_sqlalchemy import SQLAlchemy
 
 s = requests.Session()
 s.mount('http://', appengine.AppEngineAdapter())
@@ -18,7 +19,12 @@ s.mount('https://', appengine.AppEngineAdapter())
 appengine.monkeypatch()
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dev:mysql@localhost/gae-starter'
 api = Api(app)
+db.create_engine('mysql://dev:mysql@localhost/gae-starter')
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 api.add_resource(HelloWorld, '/api/1.0/helloworld')
 api.add_resource(HelloMessage, '/api/1.0/hellomessage')
