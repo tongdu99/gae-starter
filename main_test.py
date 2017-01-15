@@ -30,5 +30,5 @@ class MainTestCase(unittest.TestCase):
         self.driver.get(self.url_base+"/messages")
         message_elements = self.driver.find_elements_by_tag_name("h2")
         messages = [msg.text for msg in message_elements]
-        self.assertSequenceEqual(messages, ['Hello City', 'Hello Country', 'Hello World', 'Hello Universe'])
+        self.assertItemsEqual(messages, ['Hello City', 'Hello Country', 'Hello World', 'Hello Universe'])
 

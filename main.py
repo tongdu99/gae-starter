@@ -48,7 +48,7 @@ def home():
 @app.route('/messages')
 def message_list():
     url = url_base + '/api/1.0/hellomessage'
-    messages = requests.get(url).json()['messages']
+    messages = requests.get(url).json()
     return render_template('messages.html', messages=messages)
 
 
