@@ -9,7 +9,7 @@ from hello.messages import HelloWorld, HelloMessage, db
 
 import requests
 from requests_toolbelt.adapters import appengine
-from flask_sqlalchemy import SQLAlchemy
+from urllib import quote_plus as urlquote
 
 s = requests.Session()
 s.mount('http://', appengine.AppEngineAdapter())
@@ -19,19 +19,24 @@ s.mount('https://', appengine.AppEngineAdapter())
 appengine.monkeypatch()
 
 app = Flask(__name__)
+
+
+# local setting
+url_prefix = "http://"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dev:mysql@localhost/gae-starter'
+if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+    # app engine setting
+    url_prefix = "https://"
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:legaldocker@/gae-starter?unix_socket=/cloudsql/legaldocker:us-central1:legaldocker'
+
 api = Api(app)
-db.create_engine('mysql://dev:mysql@localhost/gae-starter')
+db.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 db.init_app(app)
 with app.app_context():
     db.create_all()
 
 api.add_resource(HelloWorld, '/api/1.0/helloworld')
 api.add_resource(HelloMessage, '/api/1.0/hellomessage')
-
-url_prefix = "http://"
-if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
-    url_prefix = "https://"
 
 host_name = app_identity.get_default_version_hostname()
 url_base = url_prefix+host_name
