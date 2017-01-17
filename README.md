@@ -14,3 +14,9 @@ mv chromedriver /usr/local/bin
 
 ## set default google cloud project
 gcloud config set project [project-id]
+
+## Tech stack
+1. Flask, Request, Flask-restful, Selenium, Pytest, Flask-SQLAlchemy, MySQL-python
+2. Pycharm integrated local debug and unit test
+3. SQLAlchemy based model and restful service
+4. Jinja2 template
